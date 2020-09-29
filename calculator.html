@@ -5,12 +5,14 @@
     <title>AES Pocket Calculator</title>
 
     <style>
-        div {
-           box-sizing: border-box;
+        #calculator {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            justify-content: space-evenly;
+            max-width: 20rem;
+            grid-gap: 0.3rem;
         }
         button {
-            width: 3rem;
-            margin: 0.1rem;
             border: 1px solid rgb(52, 58, 64);
             border-radius: 0.25rem;
         }
@@ -20,22 +22,34 @@
         button:active, button.active {
             background: lightblue;
         }
-        .group {
-            border: 1px solid black;
-            margin: 0.1rem;
-        }
-        .col {
-            display: inline-block;
-        }
         #display {
+            grid-area: 1 / 1 / span 2 / span 5;
             font-family: Courier, monospace;
             font-size: larger;
             border: 1px solid black;
             display: inline-block;
-            margin: 1rem;
             padding: 0.5rem;
-            width: 16rem;
             text-align: center;
+        }
+        #keypad {
+            display: grid;
+            grid-template-columns: subgrid;
+            grid-column: 1 / span 3;
+            grid-row: 3 / span 6;
+        }
+        .group {
+            border: 1px solid black;
+            display: grid;
+            grid-template-columns: subgrid;
+        }
+        #mem, #aes {
+            grid-column: 4 / span 1;
+        }
+        #hmac, #ops{
+            grid-column: 5 / span 1;
+        }
+        #aes, #hmac {
+            grid-row: 3 / span 4;
         }
 
     </style>
@@ -43,69 +57,51 @@
 <body>
 <h1>AES Pocket Calculator</h1>
 
-<div>
+<div id="calculator">
     <div id="display">
         <div id="line1">FFFFFFFFFFFFFFFF</div>
         <div id="line2">FFFFFFFFFFFFFFFF</div>
     </div>
-</div>
 
-<div class="col">
     <div id="keypad">
-        <div>
-            <button>F</button>
-            <button>E</button>
-            <button>D</button>
-        </div>
-        <div>
-            <button>C</button>
-            <button>B</button>
-            <button>A</button>
-        </div>
-        <div>
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-        </div>
-        <div>
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-        </div>
-        <div>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-        </div>
-        <div>
-            <button>0</button>
-        </div>
+        <button>D</button>
+        <button>E</button>
+        <button>F</button>
+        <button>A</button>
+        <button>B</button>
+        <button>C</button>
+        <button>7</button>
+        <button>8</button>
+        <button>9</button>
+        <button>4</button>
+        <button>5</button>
+        <button>6</button>
+        <button>1</button>
+        <button>2</button>
+        <button>3</button>
+        <button>0</button>
     </div>
-</div>
-<div class="col">
     <div id="aes" class="group">
         AES
-        <div><button>KEY</button></div>
-        <div><button>ENC</button></div>
-        <div><button>DEC</button></div>
+        <button>KEY</button>
+        <button>ENC</button>
+        <button>DEC</button>
     </div>
     <div id="mem" class="group">
         MEM
-        <div><button>STO</button></div>
-        <div><button>RCL</button></div>
+        <button>STO</button>
+        <button>RCL</button>
     </div>
-</div>
-<div class="col">
     <div id="hmac" class="group">
         HMAC
-        <div><button>KEY</button></div>
-        <div><button>ADD</button></div>
-        <div><button>OUT</button></div>
+        <button>KEY</button>
+        <button>ADD</button>
+        <button>OUT</button>
     </div>
     <div id="ops" class="group">
-        <div><button>XOR</button></div>
-        <div><button>INC</button></div>
-        <div><button>=</button></div>
+        <button>XOR</button>
+        <button>INC</button>
+        <button>=</button>
     </div>
 </div>
 </body>
