@@ -98,13 +98,13 @@
     </div>
     <div id="aes" class="group">
         AES
-        <button>KEY</button>
+        <button id="AES-KEY">KEY</button>
         <button>ENC</button>
         <button>DEC</button>
     </div>
     <div id="hmac" class="group">
         HMAC
-        <button>KEY</button>
+        <button id="HMAC-KEY">KEY</button>
         <button>ADD</button>
         <button>OUT</button>
     </div>
@@ -119,5 +119,45 @@
         <button>RNG</button>
     </div>
 </div>
+
+<script>
+    function buttonForKey(key) {
+        key = key.toUpperCase()
+        if (key === "=") {
+            key = "equal"
+        }
+        return document.getElementById("button-" + key)
+    }
+
+    document.addEventListener("DOMContentLoaded", function(){
+        for (let button of document.getElementsByTagName("button")) {
+            if (button.id === "") {
+                button.id = "button-" + button.innerText
+            }
+            button.onclick = function(e) {handleInput(e.target.id)}
+        }
+    });
+
+    document.addEventListener("keydown", function(e){
+        let button = buttonForKey(e.key)
+        if (button != null) {
+           button.classList.add("active")
+        }
+    })
+
+    document.addEventListener("keyup", function(e){
+        let button = buttonForKey(e.key)
+        if (button != null) {
+            handleInput(button.id)
+            button.classList.remove("active")
+        }
+    })
+
+    // handleInput is the main entry point into the calculator core
+    // It takes a button ID
+    function handleInput(id) {
+        console.log("handling " + id)
+    }
+</script>
 </body>
 </html>
