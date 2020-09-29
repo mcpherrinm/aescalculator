@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>AES Pocket Calculator</title>
+
+    <style>
+        div {
+           box-sizing: border-box;
+        }
+        button {
+            width: 3rem;
+            margin: 0.1rem;
+            border: 1px solid rgb(52, 58, 64);
+            border-radius: 0.25rem;
+        }
+        button:hover, button.hover {
+            background: linen;
+        }
+        button:active, button.active {
+            background: lightblue;
+        }
+        .group {
+            border: 1px solid black;
+            margin: 0.1rem;
+        }
+        .col {
+            display: inline-block;
+        }
+        #display {
+            font-family: Courier, monospace;
+            font-size: larger;
+            border: 1px solid black;
+            display: inline-block;
+            margin: 1rem;
+            padding: 0.5rem;
+            width: 16rem;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+<h1>AES Pocket Calculator</h1>
+
+<div>
+    <div id="display">
+        <div id="line1">FFFFFFFFFFFFFFFF</div>
+        <div id="line2">FFFFFFFFFFFFFFFF</div>
+    </div>
+</div>
+
+<div class="col">
+    <div id="keypad">
+        <div>
+            <button>F</button>
+            <button>E</button>
+            <button>D</button>
+        </div>
+        <div>
+            <button>C</button>
+            <button>B</button>
+            <button>A</button>
+        </div>
+        <div>
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+        </div>
+        <div>
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+        </div>
+        <div>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+        </div>
+        <div>
+            <button>0</button>
+        </div>
+    </div>
+</div>
+<div class="col">
+    <div id="aes" class="group">
+        AES
+        <div><button>KEY</button></div>
+        <div><button>ENC</button></div>
+        <div><button>DEC</button></div>
+    </div>
+    <div id="mem" class="group">
+        MEM
+        <div><button>STO</button></div>
+        <div><button>RCL</button></div>
+    </div>
+</div>
+<div class="col">
+    <div id="hmac" class="group">
+        HMAC
+        <div><button>KEY</button></div>
+        <div><button>ADD</button></div>
+        <div><button>OUT</button></div>
+    </div>
+    <div id="ops" class="group">
+        <div><button>XOR</button></div>
+        <div><button>INC</button></div>
+        <div><button>=</button></div>
+    </div>
+</div>
+</body>
+</html>
