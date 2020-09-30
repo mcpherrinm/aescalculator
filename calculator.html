@@ -19,6 +19,7 @@
             margin: auto;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(10, 1fr);
             justify-content: space-evenly;
             width: 25rem;
             grid-gap: 0.3rem;
@@ -29,6 +30,7 @@
         button {
             border: 1px solid rgb(52, 58, 64);
             border-radius: 0.25rem;
+            cursor: pointer;
         }
         button:hover, button.hover {
             background: linen;
@@ -37,7 +39,8 @@
             background: lightblue;
         }
         #display {
-            grid-area: 2 / 1 / span 2 / span 5;
+            grid-row-end: span 2;
+            grid-column-end: span 5;
             font-family: Courier, monospace;
             font-size: larger;
             border: 1px solid black;
@@ -48,20 +51,23 @@
         #keypad {
             display: grid;
             grid-template-columns: subgrid;
-            grid-column: 1 / span 3;
-            grid-row: 4 / span 6;
+            grid-template-rows: subgrid;
+            grid-column-end: span 3;
+            grid-row-end: span 6;
         }
         .group {
             border: 1px solid black;
             display: grid;
             grid-template-columns: subgrid;
+            grid-template-rows: subgrid;
+            grid-row-end: span 4;
         }
-        .group {
-            grid-column-end: span 1;
+        .label {
+            margin: auto auto;
         }
         h1 {
             margin: 0;
-            grid-column: 1 / span 5;
+            grid-column-end: span 5;
             font-family: Courier, monospace;
             font-size: larger;
         }
@@ -96,19 +102,19 @@
         <button id="button-equal">=</button>
     </div>
     <div id="aes" class="group">
-        AES
+        <div class="label">AES</div>
         <button id="button-AES-KEY">KEY</button>
         <button>ENC</button>
         <button>DEC</button>
     </div>
     <div id="hmac" class="group">
-        HMAC
+        <div class="label">HMAC</div>
         <button id="button-HMAC-KEY">KEY</button>
         <button>ADD</button>
         <button>OUT</button>
     </div>
     <div id="mem" class="group">
-        MEM
+        <div class="label">MEM</div>
         <button>STO</button>
         <button>RCL</button>
     </div>
