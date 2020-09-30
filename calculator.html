@@ -19,7 +19,7 @@
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             justify-content: space-evenly;
-            max-width: 20rem;
+            max-width: 30rem;
             grid-gap: 0.3rem;
 
             background: darkgray;
@@ -50,9 +50,6 @@
             grid-column: 1 / span 3;
             grid-row: 4 / span 6;
         }
-        #button-equal {
-            grid-column-end: span 2;
-        }
         .group {
             border: 1px solid black;
             display: grid;
@@ -73,8 +70,8 @@
 <div id="calculator">
     <h1>Crypto Calculator</h1>
     <div id="display">
-        <div id="line1">FFFFFFFFFFFFFFFF</div>
-        <div id="line2">FFFFFFFFFFFFFFFF</div>
+        <div id="topline">FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</div>
+        <div id="lowerline">FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</div>
     </div>
 
     <div id="keypad">
@@ -94,17 +91,18 @@
         <button>2</button>
         <button>3</button>
         <button>0</button>
+        <button >CLR</button>
         <button id="button-equal">=</button>
     </div>
     <div id="aes" class="group">
         AES
-        <button id="AES-KEY">KEY</button>
+        <button id="button-AES-KEY">KEY</button>
         <button>ENC</button>
         <button>DEC</button>
     </div>
     <div id="hmac" class="group">
         HMAC
-        <button id="HMAC-KEY">KEY</button>
+        <button id="button-HMAC-KEY">KEY</button>
         <button>ADD</button>
         <button>OUT</button>
     </div>
@@ -121,20 +119,92 @@
 </div>
 
 <script>
+    const buttonIDPrefix = "button-";
+    const displaySize = 32;
+
+    // core of the calculator.  Will be swapped for web assembly version later.
+    let core = {
+        // handleInput is called when a button is pressed
+        handleInput: function(button) {
+            if(!button.startsWith(buttonIDPrefix)) {
+                throw "button that didn't have expected prefix: " + button
+            }
+            button = button.substring(buttonIDPrefix.length)
+
+            switch(button) {
+                case "CLR":
+                    this.input = ""
+                    break;
+                case "equal":
+                    break;
+
+                case "AES-KEY":
+                    break;
+                case "ENC":
+                    break;
+                case "DEC":
+                    break;
+
+                case "HMAC-KEY":
+                    break;
+                case "ADD":
+                    break;
+                case "OUT":
+                    break;
+
+                case "STO":
+                    break;
+                case "RCL":
+                    break;
+
+                case "XOR":
+                    break;
+                case "INC":
+                    break;
+                case "RNG":
+                    break;
+
+                default:
+                    if(!(button.length === 1)) {
+                        throw "unhandled operation: " + button
+                    }
+                    this.appendInput(button)
+            }
+
+            display(button, this.input)
+        },
+
+        // appendInput handles appending input to the input buffer.
+        // Because input is in hex, a partial byte has a _ appended
+        appendInput: function(c) {
+            if(this.input.endsWith("_")) {
+                this.input = this.input.substring(0, this.input.length - 1) + c
+            } else if(this.input.length === displaySize) {
+                console.log("overlong input ignored: " + c)
+            } else {
+                this.input = this.input + c + "_"
+            }
+        },
+
+        // input stores the number being typed
+        input: "",
+    }
+
+
     function buttonForKey(key) {
         key = key.toUpperCase()
         if (key === "=") {
             key = "equal"
         }
-        return document.getElementById("button-" + key)
+        return document.getElementById(buttonIDPrefix + key)
     }
 
     document.addEventListener("DOMContentLoaded", function(){
         for (let button of document.getElementsByTagName("button")) {
             if (button.id === "") {
-                button.id = "button-" + button.innerText
+                button.id = buttonIDPrefix + button.innerText
             }
-            button.onclick = function(e) {handleInput(e.target.id)}
+            button.onclick = function(e) {core.handleInput(e.target.id)}
         }
     });
 
@@ -148,15 +218,19 @@
     document.addEventListener("keyup", function(e){
         let button = buttonForKey(e.key)
         if (button != null) {
-            handleInput(button.id)
+            core.handleInput(button.id)
             button.classList.remove("active")
         }
     })
 
-    // handleInput is the main entry point into the calculator core
-    // It takes a button ID
-    function handleInput(id) {
-        console.log("handling " + id)
+    // display updates what is shown.  both inputs should be strings with no more than 16 characters
+    function display(topline, lowerline) {
+        function update(id, text) {
+            // chop to display size and pad with non-breaking spaces
+            document.getElementById(id).innerText = text.substring(0, displaySize).padStart(displaySize, "\xa0")
+        }
+        update("topline", topline)
+        update("lowerline", lowerline)
     }
 </script>
 </body>
