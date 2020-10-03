@@ -44,23 +44,28 @@
             font-family: Courier, monospace;
             font-size: larger;
             border: 1px solid black;
-            display: inline-block;
             padding: 0.5rem;
             text-align: center;
         }
-        #keypad {
-            display: grid;
-            grid-template-columns: subgrid;
-            grid-template-rows: subgrid;
-            grid-column-end: span 3;
-            grid-row-end: span 6;
-        }
         .group {
             border: 1px solid black;
+            /* Subgrid is only supported on Firefox right now */
             display: grid;
             grid-template-columns: subgrid;
             grid-template-rows: subgrid;
             grid-row-end: span 4;
+        }
+        #aes, #mem {
+            grid-column-start: 4;
+        }
+        #hmac, #ops {
+            grid-column-start: 5;
+        }
+        #aes, #hmac {
+            grid-row-start: 4;
+        }
+        #mem, #ops {
+            grid-row-start: 8;
         }
         .label {
             margin: auto auto;
@@ -81,26 +86,24 @@
         <div id="lowerline">FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF</div>
     </div>
 
-    <div id="keypad">
-        <button>D</button>
-        <button>E</button>
-        <button>F</button>
-        <button>A</button>
-        <button>B</button>
-        <button>C</button>
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>0</button>
-        <button >CLR</button>
-        <button id="button-equal">=</button>
-    </div>
+    <button>D</button>
+    <button>E</button>
+    <button>F</button>
+    <button>A</button>
+    <button>B</button>
+    <button>C</button>
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>0</button>
+    <button >CLR</button>
+    <button id="button-equal">=</button>
     <div id="aes" class="group">
         <div class="label">AES</div>
         <button id="button-AES-KEY">KEY</button>
