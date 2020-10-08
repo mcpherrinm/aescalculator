@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AES Pocket Calculator</title>
 
+    <script type="module">
+        import init, { greet } from './pkg/aescalculator.js';
+
+        async function run() {
+            await init();
+
+            greet();
+        }
+
+        run()
+    </script>
     <style>
         html {
             height: 100%;
